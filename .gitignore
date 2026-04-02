@@ -1,0 +1,16 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+terraform.tfvars
+.terraform.lock.hcl
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Node/Python (future safe)
+node_modules/
+__pycache__/
