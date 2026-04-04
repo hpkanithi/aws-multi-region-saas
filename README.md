@@ -1,4 +1,4 @@
-# Multi-Region AWS SaaS Platform (Terraform + ECS)
+# Multi-Region AWS SaaS Platform
 
 ## Overview
 This project demonstrates a production-style multi-region AWS architecture using Terraform and ECS Fargate.

@@ -1,12 +1,21 @@
 # Terraform
-.terraform/
+**/.terraform/*
 *.tfstate
-*.tfstate.backup
-terraform.tfvars
-.terraform.lock.hcl
+*.tfstate.*
+crash.log
+
+# Ignore override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform lock (OPTIONAL - we can keep it later if needed)
+# .terraform.lock.hcl
 
 # OS
 .DS_Store
+Thumbs.db
 
 # Logs
 *.log
