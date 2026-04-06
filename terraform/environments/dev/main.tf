@@ -27,3 +27,15 @@ module "alb" {
   subnets           = [module.vpc.public_subnet_1_id, module.vpc.public_subnet_2_id]
   security_group_id = module.security_groups.alb_sg_id
 }
+
+module "ecs" {
+  source = "../../modules/ecs"
+
+  environment           = var.environment
+  aws_region            = var.aws_region
+  subnet_ids            = [module.vpc.public_subnet_1_id, module.vpc.public_subnet_2_id]
+  ecs_security_group_id = module.security_groups.ecs_sg_id
+  target_group_arn      = module.alb.target_group_arn
+  container_image       = "177362732651.dkr.ecr.us-east-1.amazonaws.com/ecs-demo-app:latest"
+  container_port        = 80
+}
