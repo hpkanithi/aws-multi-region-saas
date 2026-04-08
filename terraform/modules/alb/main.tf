@@ -1,5 +1,5 @@
 resource "aws_lb" "main" {
-  name               = "dev-alb"
+  name               = "${var.environment}-alb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [var.security_group_id]
@@ -7,7 +7,7 @@ resource "aws_lb" "main" {
 }
 
 resource "aws_lb_target_group" "main" {
-  name        = "dev-target-group"
+  name        = "${var.environment}-target-group"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = var.vpc_id

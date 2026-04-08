@@ -9,3 +9,7 @@ variable "vpc_id" {
 variable "security_group_id" {
   type = string
 }
+
+variable "environment" {
+  type = string
+}

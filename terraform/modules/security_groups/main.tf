@@ -1,5 +1,5 @@
 resource "aws_security_group" "alb_sg" {
-  name        = "alb-security-group"
+  name        = "${var.environment}-alb-security-group"
   description = "Allow HTTP traffic"
   vpc_id      = var.vpc_id
 
@@ -23,7 +23,7 @@ resource "aws_security_group" "alb_sg" {
 }
 
 resource "aws_security_group" "ecs_sg" {
-  name        = "ecs-security-group"
+  name        = "${var.environment}-ecs-security-group"
   description = "Allow traffic from ALB to ECS"
   vpc_id      = var.vpc_id
 
