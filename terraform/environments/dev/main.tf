@@ -18,6 +18,8 @@ module "security_groups" {
   source = "../../modules/security_groups"
 
   vpc_id = module.vpc.vpc_id
+
+  environment = var.environment
 }
 
 module "alb" {
@@ -26,6 +28,8 @@ module "alb" {
   vpc_id            = module.vpc.vpc_id
   subnets           = [module.vpc.public_subnet_1_id, module.vpc.public_subnet_2_id]
   security_group_id = module.security_groups.alb_sg_id
+
+  environment = var.environment
 }
 
 module "ecs" {

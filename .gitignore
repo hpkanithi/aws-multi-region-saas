@@ -10,8 +10,7 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Terraform lock (OPTIONAL - we can keep it later if needed)
-# .terraform.lock.hcl
+.terraform.lock.hcl
 
 # OS
 .DS_Store
