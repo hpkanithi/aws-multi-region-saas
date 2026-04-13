@@ -1,13 +1,20 @@
 name: Build and Deploy to ECS
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        description: "Environment to deploy the application to"
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.target_environment }}
 
     steps:
       - name: Checkout repository
