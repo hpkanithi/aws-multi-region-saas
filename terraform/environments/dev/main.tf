@@ -43,3 +43,13 @@ module "ecs" {
   container_image       = "177362732651.dkr.ecr.us-east-1.amazonaws.com/ecs-demo-app:latest"
   container_port        = 80
 }
+
+module "monitoring" {
+  source = "../../modules/monitoring"
+
+  environment             = var.environment
+  ecs_cluster_name        = module.ecs.ecs_cluster_name
+  ecs_service_name        = module.ecs.ecs_service_name
+  alb_arn_suffix          = module.alb.alb_arn_suffix
+  target_group_arn_suffix = module.alb.target_group_arn_suffix
+}

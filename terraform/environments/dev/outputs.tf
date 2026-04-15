@@ -49,3 +49,19 @@ output "ecs_cluster_name" {
 output "ecs_service_name" {
   value = module.ecs.ecs_service_name
 }
+
+output "ecs_cpu_alarm_name" {
+  value = module.monitoring.ecs_cpu_alarm_name
+}
+
+output "ecs_memory_alarm_name" {
+  value = module.monitoring.ecs_memory_alarm_name
+}
+
+output "alb_5xx_alarm_name" {
+  value = module.monitoring.alb_5xx_alarm_name
+}
+
+output "target_unhealthy_alarm_name" {
+  value = module.monitoring.target_unhealthy_alarm_name
+}
