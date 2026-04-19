@@ -68,7 +68,7 @@ The system is designed with **scalability, resilience, and operational control**
 
 ```
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 - **Cloud**: AWS (VPC, ALB, ECS Fargate, CloudWatch, ECR)
 - **IaC**: Terraform (modular design)
@@ -77,7 +77,7 @@ The system is designed with **scalability, resilience, and operational control**
 - **State Management**: S3 + DynamoDB (remote backend)
 
 
-## 🏗️ Infrastructure Design
+## Infrastructure Design
 
 ### Environments
 
@@ -96,7 +96,7 @@ The system is designed with **scalability, resilience, and operational control**
 - `monitoring` - CloudWatch alarms
 - `route53_failover` - (planned DNS failover)
 
-## 🔁 CI/CD Pipelines
+## CI/CD Pipelines
 
 ### App Deployment
 
@@ -121,7 +121,7 @@ Ensures:
 - no accidental deployments
 - cost-aware workflow
 
-## 📊 Monitoring & Observability
+## Monitoring & Observability
 
 CloudWatch alarms are configured for:
 
@@ -134,14 +134,14 @@ Provides visibility into:
 - application health
 - infrastructure performance
 
-## 🌍 Multi-Region Strategy
+## Multi-Region Strategy
 
 - Primary region: `us-east-1`
 - Secondary region (DR): `us-west-2`
 
 DR environment mirrors production infrastructure and can serve traffic during failures.
 
-## 🔐 Design Decisions
+## Design Decisions
 
 - **Approval-based infra deployment** → prevents unintended AWS costs  
 - **Separate app & infra pipelines** → clean DevOps separation  
@@ -151,7 +151,7 @@ DR environment mirrors production infrastructure and can serve traffic during fa
 
 - Designed with a clear separation between application and infrastructure pipelines to align with real-world DevOps practices
 
-## 🧪 How to Run
+## How to Run
 
 ### Deploy infrastructure
 
