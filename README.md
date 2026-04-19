@@ -1,10 +1,11 @@
-# Multi-Region AWS SaaS Platform
+# Multi-Region AWS SaaS Platform (Terraform + ECS + CI/CD)
+> Production-grade multi-region AWS architecture with CI/CD, monitoring, and disaster recovery design.
 
 ## Overview
-This project demonstrates a production-style multi-region AWS architecture using Terraform and ECS Fargate.
+This project showcases a production-grade multi-region AWS SaaS architecture built using Terraform and ECS Fargate, featuring environment-aware CI/CD pipelines, approval-gated infrastructure deployments, and integrated monitoring.
 
 ## Key Features
-- Infrastructure as Code - Terraform modules
+- Infrastructure as Code (Terraform modules)
 - Containerized application - Docker + ECS Fargate
 - Environment-aware CI/CD pipelines - GitHub Actions
 - Approval-gated infrastructure changes
@@ -13,9 +14,59 @@ This project demonstrates a production-style multi-region AWS architecture using
 
 The system is designed with **scalability, resilience, and operational control** in mind.
 
+## Capabilities
 
-## Architecture (Coming Soon)
-Diagram will be added.
+- Deploy infrastructure using Terraform with remote state (S3 + DynamoDB)
+- Deploy applications via GitHub Actions to ECS Fargate
+- Enforce approval gates for infrastructure changes
+- Run identical stacks across multiple AWS regions
+- Monitor application and infrastructure health using CloudWatch
+- Support disaster recovery architecture with a secondary region
+
+## Architecture
+```plaintext
+                        ┌───────────────────────────┐
+                        │     CI/CD Pipeline        │
+                        │     (GitHub Actions)      │
+                        └────────────┬──────────────┘
+                                     │
+                                     ▼
+                            ┌────────────────┐
+                            │   Amazon ECR   │
+                            └───────┬────────┘
+                                    │
+               ┌────────────────────┴────────────────────┐
+               │                                         │
+               ▼                                         ▼
+┌──────────────────────────────┐        ┌──────────────────────────────┐
+│   Primary Region (us-east-1) │        │  Standby Region (us-west-2)  │
+│                              │        │                              │
+│        ┌────────────┐        │        │        ┌────────────┐        │
+│ User → │    ALB     │        │        │        │    ALB     │        │
+│        └─────┬──────┘        │        │        └─────┬──────┘        │
+│              │               │        │              │               │
+│              ▼               │        │              ▼               │
+│        ┌────────────┐        │        │        ┌────────────┐        │
+│        │ ECS Fargate│        │        │        │ ECS Fargate│        │
+│        │ (App)      │        │        │        │ (App)      │        │
+│        └────────────┘        │        │        └────────────┘        │
+│                              │        │                              │
+└──────────────┬───────────────┘        └──────────────┬───────────────┘
+               │                                       │
+               └──────────────┬────────────────────────┘
+                              ▼
+                   ┌────────────────────────┐
+                   │  CloudWatch Monitoring │
+                   └────────────────────────┘
+
+        ─ ─ ─ ─ ─ Route 53 Failover (Planned) ─ ─ ─ ─ ─
+
+                   ┌────────────────────────┐
+                   │ Terraform Backend      │
+                   │ (S3 + DynamoDB)        │
+                   └────────────────────────┘
+
+```
 
 ## ⚙️ Tech Stack
 
@@ -32,7 +83,7 @@ Diagram will be added.
 
 - `dev` - used as testing environment  
 - `prod` - created as primary production environment  
-- `dr` - disaster recovery (secondary region) for multi- region purpose 
+- `dr` - disaster recovery environment in a secondary region for failover readiness
 - `global` - shared/global services (Route 53 - planned for failover scenario)
 
 
@@ -54,7 +105,8 @@ Diagram will be added.
 - Pushes to ECR
 - Deploys to ECS
 
-Supports - environment-specific secrets
+Supports:
+- environment-specific secrets
 - dev deployment
 - prod deployment
 
@@ -97,16 +149,19 @@ DR environment mirrors production infrastructure and can serve traffic during fa
 - **Modular Terraform design** → reusable and scalable  
 - **Manual DR activation** → cost-optimized for non-production use  
 
+- Designed with a clear separation between application and infrastructure pipelines to align with real-world DevOps practices
+
 ## 🧪 How to Run
 
 ### Deploy infrastructure
 
 In the local environment, through bash or powershell.
-
-`cd terraform/environments/dev`
-`terraform init`
-`terraform plan`
-`terraform apply`
+```bash
+cd terraform/environments/dev
+terraform init
+terraform plan
+terraform apply
+```
 
 ### Deploy Application
 
@@ -115,17 +170,18 @@ Go to GitHub repository, the GitHub Actions.
 - Select the environment
 
 ### Screenshots
-The screenshots added here are for each module upon successful deployment.
 
-`ECS`
-`ALB`
-`VPC`
-`CloudWatch`
-`GitHub Actions Approval`
+The following screenshots demonstrate successful deployment and operation:
+
+- ECS service running tasks
+- ALB endpoint responding with application output
+- CloudWatch alarms configured and active
+- Terraform infrastructure deployment
+- GitHub Actions approval workflow
 
 ### Future Enhancements
 
-- Route 53 failover - the DNS -based traffic routing is placed in the project but could not deploy due to unavailability of domain name.
+- Route 53 failover - designed for DNS-based traffic routing but not fully deployed due to lack of domain configuration
 - Auto Failover testing
 - SNS notifications for alarms
 - Blue/Green Deployments
@@ -136,11 +192,12 @@ This project demonstrates:
 
 - End-to-end cloud infrastructure automation
 - CI/CD pipeline design with approval gates
-- Multi-region deployment strategy
+- Traffic failover is designed using a primary-secondary model, where the DR region can serve traffic during primary region failure.
 - Observability integration
 - Cost-aware DevOps practices
+- Demonstrates real-world DevOps practices including environment isolation, deployment safety, and multi-region resilience
 
 ### Author
 **Hema Praharsha Kanithi**
-GitHub: https://github.com/hpkanithi
-Linkedin: https://www.linkedin.com/in/hema-praharsha-kanithi-100aa1287/
+- GitHub: https://github.com/hpkanithi
+- Linkedin: https://www.linkedin.com/in/hema-praharsha-kanithi-100aa1287/
